@@ -254,6 +254,9 @@ namespace SunClouds.ViewModel
 
         public async Task RunAsync()
         {
+
+
+        
             OpenMeteoClient client = new OpenMeteoClient();
             WeatherForecast weatherData = await client.QueryAsync(Properties.Settings.Default.CurrentCity);
             string weatherCode = client.WeathercodeToString((int)weatherData.Daily.Weathercode[0]) + "." + " " + weatherData.Hourly.Temperature_2m[0].ToString() + "°";
