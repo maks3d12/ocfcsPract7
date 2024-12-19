@@ -20,8 +20,22 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
 
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.sln') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Restore NuGet packages
       run: nuget restore PracticalWork10.sln
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        vs-version: 'latest' 
 
     - name: Build with MSBuild
       run: msbuild PracticalWork10.sln /p:Configuration=Release
