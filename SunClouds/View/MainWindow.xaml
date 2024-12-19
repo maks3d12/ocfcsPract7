@@ -1,0 +1,286 @@
+﻿<Window x:Class="SunClouds.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SunClouds"
+        mc:Ignorable="d"
+        
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
+        xmlns:viewmodel="clr-namespace:SunClouds.ViewModel" 
+
+        Style="{StaticResource WindowStyle}"
+        WindowStartupLocation="CenterScreen"
+        Title="Погодный сервис SunClouds"
+        MinHeight="274" MinWidth="438"
+		Height="850" Width="1500"
+        >
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Maximize" />
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Minimize" />
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
+    </Window.CommandBindings>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="438"/>
+            <ColumnDefinition Width="1062*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="{DynamicResource ThemeImage}" Grid.ColumnSpan="2"
+               Stretch="UniformToFill" Panel.ZIndex="-1" Grid.RowSpan="2"/>
+
+        <Grid x:Name="DragGrid" MouseDown="Grid_MouseDown" Grid.ColumnSpan="2" Height="30" VerticalAlignment="Top">
+            <Grid Name="Headbar" Grid.Row="0" Height="30" Background="Transparent" Grid.ColumnSpan="2">
+                <StackPanel x:Name="panel" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{DynamicResource MinimizeButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Minimize"
+                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
+                    <Button x:Name="RestoreButton" Visibility="Collapsed" Style="{DynamicResource RestoreButtonStyle}" 
+                            Command="{x:Static SystemCommands.RestoreWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Restore"/>
+                    <Button x:Name="MaximizeButton" Visibility="Visible" Style="{DynamicResource MaximizeButtonStyle}" 
+                            Command="{x:Static SystemCommands.MaximizeWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Maximize" />
+                    <Button Style="{DynamicResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Close"
+                            Command="{x:Static SystemCommands.CloseWindowCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="92.891"/>
+                <RowDefinition Height="172.797"/>
+                <RowDefinition Height="71*"/>
+                <RowDefinition Height="82*"/>
+                <RowDefinition Height="109*"/>
+                <RowDefinition Height="60.928"/>
+            </Grid.RowDefinitions>
+            <Border
+                Background="{DynamicResource Primary}"
+                Opacity="0.5" Grid.RowSpan="6"/>
+
+            <TextBlock
+                Margin="0,23,0,17"
+                Text="{Binding City}"
+                FontSize="36"
+                FontWeight="SemiBold"
+                TextAlignment="Center"
+                Foreground="{DynamicResource Secondary}"/>
+            <Rectangle
+                Height="2"
+                Margin="20,78,20,13"
+                Fill="{DynamicResource Secondary}"
+                />
+
+            <Image
+                Margin="64,33,251,16"
+                Source="{Binding Icon}"
+                Panel.ZIndex="1" Grid.Row="1"
+                >
+                <Image.Effect>
+                    <DropShadowEffect Direction="270" ShadowDepth="5"  Opacity="0.3"/>
+                </Image.Effect>
+            </Image>
+            <WrapPanel
+                Margin="194,28,32,-10" Grid.Row="1"
+                >
+                <TextBlock
+                    Text="{Binding WeathercodeTemperature}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource Secondary2}"
+                    FontWeight="SemiBold"
+                    TextWrapping="WrapWithOverflow"
+                    FontSize="26"
+                    />
+                <TextBlock
+                    Text="{Binding ApparentTemperature}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource Secondary2}"
+                    FontWeight="SemiBold"
+                    FontSize="26"
+                    TextWrapping="WrapWithOverflow"
+                    />
+            </WrapPanel>
+
+            <TextBlock
+                Margin="11,94,343,0"
+                Text="{Binding Time}"
+                Foreground="{DynamicResource WindowRootButtons}"
+                FontWeight="SemiBold"
+                FontSize="20"
+                TextAlignment="Center"
+                VerticalAlignment="Top" Grid.Row="2"
+                />
+            <Image
+                Margin="95,76,283,7"
+                Source="{Binding Icon}"
+                Panel.ZIndex="1" Grid.Row="2"
+                >
+                <Image.Effect>
+                    <DropShadowEffect Direction="270" ShadowDepth="5"  Opacity="0.3"/>
+                </Image.Effect>
+            </Image>
+            <WrapPanel
+                Margin="167,76,47,-5" Grid.Row="2"
+                >
+                <TextBlock
+                    Text="{Binding WeathercodeTemperature}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+                <TextBlock
+                    Text="{Binding ApparentTemperature}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+            </WrapPanel>
+
+            <TextBlock
+                Margin="11,102,343,0"
+                Text="{Binding Time2}"
+                Foreground="{DynamicResource WindowRootButtons}"
+                FontWeight="SemiBold"
+                FontSize="20"
+                TextAlignment="Center"
+                VerticalAlignment="Top" Grid.Row="3"
+                />
+            <Image
+                Margin="95,94,283,24"
+                Source="{Binding Icon2}"
+                Panel.ZIndex="1" Grid.Row="3"
+                >
+                <Image.Effect>
+                    <DropShadowEffect Direction="270" ShadowDepth="5"  Opacity="0.3"/>
+                </Image.Effect>
+            </Image>
+            <WrapPanel
+                Margin="167,72,47,6" Grid.Row="3"
+                >
+                <TextBlock
+                    Text="{Binding WeathercodeTemperature2}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+                <TextBlock
+                    Text="{Binding ApparentTemperature2}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+            </WrapPanel>
+
+            <TextBlock
+                Margin="11,102,343,0"
+                Foreground="{DynamicResource WindowRootButtons}"
+                Text="{Binding Time3}"
+                FontWeight="SemiBold"
+                FontSize="20"
+                TextAlignment="Center"
+                VerticalAlignment="Top" Grid.Row="4"
+                />
+            <Image
+                Margin="95,86,283,72"
+                Source="{Binding Icon3}"
+                Panel.ZIndex="1" Grid.Row="4"
+                >
+                <Image.Effect>
+                    <DropShadowEffect Direction="270" ShadowDepth="5"  Opacity="0.3"/>
+                </Image.Effect>
+            </Image>
+            <WrapPanel
+                Margin="167,78,47,65" Grid.Row="4"
+                >
+                <TextBlock
+                    Text="{Binding WeathercodeTemperature3}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+                <TextBlock
+                    Text="{Binding ApparentTemperature3}"
+                    TextAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Foreground="{DynamicResource WindowRootButtons}"
+                    FontSize="20"
+                    TextWrapping="WrapWithOverflow"
+                    />
+            </WrapPanel>
+
+            <Image
+                Margin="121,93,307,39"
+                Source="/Resources/Line.png"
+                Stretch="Fill" Grid.RowSpan="5" Grid.Row="1"
+                >
+                <Image.Effect>
+                    <DropShadowEffect Direction="270" ShadowDepth="5"  Opacity="0.1"/>
+                </Image.Effect>
+            </Image>
+        </Grid>
+
+        <Grid
+            Grid.Column="1"
+            Height="78"
+            VerticalAlignment="Top">
+            <Button
+                Name="WeatherPageButton"
+                Click="WeatherPageButton_Click"
+                Margin="35,25,556,0"
+                BorderThickness="0"
+                Background="Transparent"
+                Content="Погода"
+                HorizontalContentAlignment="Left"
+                FontSize="36"
+                FontWeight="SemiBold"
+                Foreground="White"/>
+            <Button
+                Name="SettingsPageButton"
+                Click="SettingsPageButton_Click"
+                Margin="556,25,35,0"
+                BorderThickness="0"
+                Background="Transparent"
+                Content="Настройки"
+                HorizontalContentAlignment="Right"
+                FontSize="36"
+                FontWeight="SemiBold"
+                Foreground="White"/>
+            <Rectangle
+                Height="2"
+                Margin="35,25,556,0"
+                VerticalAlignment="Bottom"
+                Fill="White"/>
+            <Rectangle
+                Height="2"
+                Margin="556,25,35,0"
+                VerticalAlignment="Bottom"
+                Fill="White"/>
+        </Grid>
+
+        <Grid
+            Grid.Column="1"
+            Margin="0,78,0,0">
+            <Frame x:Name="Frame" Source="WeatherData.xaml" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Window>

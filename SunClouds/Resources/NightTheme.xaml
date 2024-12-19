@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageSource x:Key="ThemeImage">pack://application:,,,/Resources/Night.png</ImageSource>
+    <Brush x:Key="Primary">#F8C5B4</Brush>
+    <Brush x:Key="Secondary">#512E6E</Brush>
+    <Brush x:Key="Secondary2">#591E6E</Brush>
+    <Brush x:Key="ForFocus">#F8C5B4</Brush>
+    <Brush x:Key="Background">#3D95B9</Brush>
+    <Brush x:Key="WindowRootButtons">#FFFFFF</Brush>
+    <Brush x:Key="Hint">White</Brush>
+    <!-- Для других словарей -->
+    <Color x:Key="SecondaryColor">#591E6E</Color>
+    <Color x:Key="ForFocusColor">#F8C5B4</Color>
+</ResourceDictionary>
