@@ -1,0 +1,27 @@
+name: Build WPF C# Project
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore NuGet packages
+      run: nuget restore PracticalWork10.sln
+
+    - name: Build with MSBuild
+      run: msbuild PracticalWork10.sln /p:Configuration=Release
